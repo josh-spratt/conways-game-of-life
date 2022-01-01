@@ -23,14 +23,55 @@ Conway's Rules:
 """
 
 
-def _get_neighbors(i, j):
-    pass
+def _get_neighbors(matrix, i, j):
+    if i == 0 and j == 0:
+        pass  # top left
+    elif i == 0 and j == len(matrix[0]):
+        pass  # top right
+    elif i == len(matrix) and j == 0:
+        pass  # left bottom
+    elif i == len(matrix) and j == len(matrix[0]):
+        pass  # right bottom
+    elif i == 0:
+        pass  # top
+    elif i == len(matrix):
+        pass  # bottom
+    elif j == 0:
+        pass  # left
+    elif j == len(matrix[0]):
+        pass  # right
+    else:
+        pass 
+    diag_top_left_neighbor = matrix[i-1][j-1]
+    print(diag_top_left_neighbor)
+    top_neighbor = matrix[i-1][j]
+    print(top_neighbor)
+    diag_top_right_neighbor = matrix[i-1][j+1]
+    print(diag_top_right_neighbor)
+    right_neighbor = matrix[i][j+1]
+    print(right_neighbor)
+    diag_bottom_right_neighbor = matrix[i+1][j+1]
+    print(diag_bottom_right_neighbor)
+    bottom_neighbor = matrix[i+1][j]
+    print(bottom_neighbor)
+    diag_bottom_left_neighbor = matrix[i+1][j-1]
+    print(diag_bottom_left_neighbor)
+    left_neighbor = matrix[i][j-1]
+    print(left_neighbor)
 
 
 def conway_rules(starting_matrix):
     for i in range(0, len(starting_matrix)):
         for j in range(0, len(starting_matrix[0])):
-            print(starting_matrix[i][j])
+            pass
 
 
-conway_rules(TEST_START_MATRIX)
+_get_neighbors(matrix=TEST_START_MATRIX, i=0, j=0)
+# print(TEST_START_MATRIX[3][3+1]) # right
+# print(TEST_START_MATRIX[3+1][3]) # bottom
+# print(TEST_START_MATRIX[3+1][3+1]) # diagonal bottom right
+# print(TEST_START_MATRIX[3][3-1]) # left
+# print(TEST_START_MATRIX[3-1][3]) # top
+# print(TEST_START_MATRIX[3+1][3-1]) # diagonal bottom left
+# print(TEST_START_MATRIX[3-1][3-1]) # diagonal top left
+# print(TEST_START_MATRIX[3-1][3+1]) # diagonal top right
