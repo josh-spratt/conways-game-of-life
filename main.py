@@ -57,31 +57,47 @@ def conway_rules(starting_matrix):
 # TODO: how to dynamically render the pyplot so that you can see the changes in realtime instead of open/close?
 # TODO: how to set this up in a while loop so that the function runs with the input parameter being the output of the function's last iteration (see below)
 def main():
-    first_iteration = conway_rules(GLIDER_TEST)
-    pyplot.imshow(first_iteration)
-    pyplot.show()
-    pyplot.clf()
-    second_iteration = conway_rules(first_iteration)
-    pyplot.imshow(second_iteration)
-    pyplot.show()
-    pyplot.clf()
-    third_iteration = conway_rules(second_iteration)
-    pyplot.imshow(third_iteration)
-    pyplot.show()
-    pyplot.clf()
-    fourth_iteration = conway_rules(third_iteration)
-    pyplot.imshow(fourth_iteration)
-    pyplot.show()
-    pyplot.clf()
-    fifth_iteration = conway_rules(fourth_iteration)
-    pyplot.imshow(fifth_iteration)
-    pyplot.show()
-    pyplot.clf()
-    sixth_iteration = conway_rules(fifth_iteration)
-    pyplot.imshow(sixth_iteration)
-    pyplot.show()
-    pyplot.clf()
-
-
+    # first_iteration = conway_rules(GLIDER_TEST)
+    # pyplot.imshow(first_iteration)
+    # pyplot.show()
+    # pyplot.clf()
+    # second_iteration = conway_rules(first_iteration)
+    # pyplot.imshow(second_iteration)
+    # pyplot.show()
+    # pyplot.clf()
+    # third_iteration = conway_rules(second_iteration)
+    # pyplot.imshow(third_iteration)
+    # pyplot.show()
+    # pyplot.clf()
+    # fourth_iteration = conway_rules(third_iteration)
+    # pyplot.imshow(fourth_iteration)
+    # pyplot.show()
+    # pyplot.clf()
+    # fifth_iteration = conway_rules(fourth_iteration)
+    # pyplot.imshow(fifth_iteration)
+    # pyplot.show()
+    # pyplot.clf()
+    # sixth_iteration = conway_rules(fifth_iteration)
+    # pyplot.imshow(sixth_iteration)
+    # pyplot.show()
+    # pyplot.clf()
+    i = 0
+    while i in range(0, 50):
+        if i == 0:
+            # first iteration
+            x = conway_rules(GLIDER_TEST)
+            print(f"iteration {1}")
+            for row in x:
+                print(row)
+            i += 1
+        elif i > 0:
+            # subsequent iterations
+            x = conway_rules(x)
+            print(f"iteration {i}")
+            for row in x:
+                print(row)
+            i += 1
+            
+            
 if __name__ == "__main__":
     main()
