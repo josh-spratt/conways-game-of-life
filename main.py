@@ -1,17 +1,30 @@
-from src.build_matrix import build_2d_array
-
+from src.build_matrix import build_2d_array, initiate_tmp_matrix
+from src.get_neighbors import get_neighbors
+from matplotlib import pyplot
 START_MATRIX = build_2d_array(9, 9)
 
-TEST_START_MATRIX = [
-    [0, 1, 0, 0, 1, 1, 0, 1, 0],
-    [1, 1, 1, 0, 1, 1, 0, 0, 1],
-    [0, 0, 0, 0, 1, 1, 0, 0, 0],
-    [0, 0, 1, 1, 0, 1, 1, 1, 1],
-    [0, 0, 1, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 1, 0, 1, 1, 1, 1],
-    [0, 0, 1, 1, 0, 0, 1, 0, 0],
-    [1, 1, 0, 0, 1, 0, 0, 1, 1],
-    [1, 0, 0, 1, 0, 1, 1, 1, 1]
+# TEST_START_MATRIX = [
+#     [0, 1, 0, 0, 1, 1, 0, 1, 0],
+#     [1, 1, 1, 0, 1, 1, 0, 0, 1],
+#     [0, 0, 0, 0, 1, 1, 0, 0, 0],
+#     [0, 0, 1, 1, 0, 1, 1, 1, 1],
+#     [0, 0, 1, 0, 0, 0, 0, 0, 1],
+#     [1, 0, 0, 1, 0, 1, 1, 1, 1],
+#     [0, 0, 1, 1, 0, 0, 1, 0, 0],
+#     [1, 1, 0, 0, 1, 0, 0, 1, 1],
+#     [1, 0, 0, 1, 0, 1, 1, 1, 1]
+# ]
+
+GLIDER_TEST = [
+    [0, 0, 1, 0, 0, 0, 0, 0, 0],
+    [1, 0, 1, 0, 0, 0, 0, 0, 0],
+    [0, 1, 1, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0]
 ]
 
 """
@@ -23,55 +36,52 @@ Conway's Rules:
 """
 
 
-def _get_neighbors(matrix, i, j):
-    if i == 0 and j == 0:
-        pass  # top left
-    elif i == 0 and j == len(matrix[0]):
-        pass  # top right
-    elif i == len(matrix) and j == 0:
-        pass  # left bottom
-    elif i == len(matrix) and j == len(matrix[0]):
-        pass  # right bottom
-    elif i == 0:
-        pass  # top
-    elif i == len(matrix):
-        pass  # bottom
-    elif j == 0:
-        pass  # left
-    elif j == len(matrix[0]):
-        pass  # right
-    else:
-        pass 
-    diag_top_left_neighbor = matrix[i-1][j-1]
-    print(diag_top_left_neighbor)
-    top_neighbor = matrix[i-1][j]
-    print(top_neighbor)
-    diag_top_right_neighbor = matrix[i-1][j+1]
-    print(diag_top_right_neighbor)
-    right_neighbor = matrix[i][j+1]
-    print(right_neighbor)
-    diag_bottom_right_neighbor = matrix[i+1][j+1]
-    print(diag_bottom_right_neighbor)
-    bottom_neighbor = matrix[i+1][j]
-    print(bottom_neighbor)
-    diag_bottom_left_neighbor = matrix[i+1][j-1]
-    print(diag_bottom_left_neighbor)
-    left_neighbor = matrix[i][j-1]
-    print(left_neighbor)
-
-
 def conway_rules(starting_matrix):
+    tmp_matrix = initiate_tmp_matrix(width=len(starting_matrix[0]), height=len(starting_matrix))
     for i in range(0, len(starting_matrix)):
         for j in range(0, len(starting_matrix[0])):
-            pass
+            neighbors = get_neighbors(matrix=starting_matrix, i=i, j=j)
+            if starting_matrix[i][j] == 1 and sum(neighbors) < 2:
+                tmp_matrix[i][j] = 0
+            elif starting_matrix[i][j] == 1 and 2 <= sum(neighbors) <= 3:
+                tmp_matrix[i][j] = 1
+            elif starting_matrix[i][j] == 1 and sum(neighbors) > 3:
+                tmp_matrix[i][j] = 0
+            elif starting_matrix[i][j] == 0 and sum(neighbors) == 3:
+                tmp_matrix[i][j] = 1
+            else:
+                tmp_matrix[i][j] = starting_matrix[i][j]
+    return tmp_matrix
 
 
-_get_neighbors(matrix=TEST_START_MATRIX, i=0, j=0)
-# print(TEST_START_MATRIX[3][3+1]) # right
-# print(TEST_START_MATRIX[3+1][3]) # bottom
-# print(TEST_START_MATRIX[3+1][3+1]) # diagonal bottom right
-# print(TEST_START_MATRIX[3][3-1]) # left
-# print(TEST_START_MATRIX[3-1][3]) # top
-# print(TEST_START_MATRIX[3+1][3-1]) # diagonal bottom left
-# print(TEST_START_MATRIX[3-1][3-1]) # diagonal top left
-# print(TEST_START_MATRIX[3-1][3+1]) # diagonal top right
+# TODO: how to dynamically render the pyplot so that you can see the changes in realtime instead of open/close?
+# TODO: how to set this up in a while loop so that the function runs with the input parameter being the output of the function's last iteration (see below)
+def main():
+    first_iteration = conway_rules(GLIDER_TEST)
+    pyplot.imshow(first_iteration)
+    pyplot.show()
+    pyplot.clf()
+    second_iteration = conway_rules(first_iteration)
+    pyplot.imshow(second_iteration)
+    pyplot.show()
+    pyplot.clf()
+    third_iteration = conway_rules(second_iteration)
+    pyplot.imshow(third_iteration)
+    pyplot.show()
+    pyplot.clf()
+    fourth_iteration = conway_rules(third_iteration)
+    pyplot.imshow(fourth_iteration)
+    pyplot.show()
+    pyplot.clf()
+    fifth_iteration = conway_rules(fourth_iteration)
+    pyplot.imshow(fifth_iteration)
+    pyplot.show()
+    pyplot.clf()
+    sixth_iteration = conway_rules(fifth_iteration)
+    pyplot.imshow(sixth_iteration)
+    pyplot.show()
+    pyplot.clf()
+
+
+if __name__ == "__main__":
+    main()

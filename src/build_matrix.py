@@ -8,6 +8,11 @@ def build_2d_array(width, height):
     return matrix
 
 
+def initiate_tmp_matrix(width, height):
+    matrix = [[None for x in range(width)] for y in range(height)]
+    return matrix
+
+
 """
 Example Matrix:
 [
@@ -20,5 +25,18 @@ Example Matrix:
     [0, 0, 1, 1, 0, 0, 1, 0, 0],
     [1, 1, 0, 0, 1, 0, 0, 1, 1],
     [1, 0, 0, 1, 0, 1, 1, 1, 1]
+]
+"""
+"""
+[
+[None, None, None, None, None, None, None, None, None],
+[None, None, None, None, None, None, None, None, None],
+[None, None, None, None, None, None, None, None, None],
+[None, None, None, None, None, None, None, None, None],
+[None, None, None, None, None, None, None, None, None],
+[None, None, None, None, None, None, None, None, None],
+[None, None, None, None, None, None, None, None, None],
+[None, None, None, None, None, None, None, None, None],
+[None, None, None, None, None, None, None, None, None]
 ]
 """
